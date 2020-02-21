@@ -1,0 +1,596 @@
+<!DOCTYPE html>
+<!--
+This is a starter template page. Use this page to start your new project from
+scratch. This page gets rid of all links and provides the needed markup only.
+-->
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+
+  <title>AdminLTE 3 | Starter</title>
+
+  <!-- Font Awesome Icons -->
+  <link rel="stylesheet" href="plugins/fontawesome-free/css/all.min.css">
+  <!-- Theme style -->
+  <link rel="stylesheet" href="dist/css/adminlte.min.css">
+  <!-- Google Font: Source Sans Pro -->
+  <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+  <!-- iCheck for checkboxes and radio inputs -->
+  <link rel="stylesheet" href="plugins/icheck-bootstrap/icheck-bootstrap.min.css">
+</head>
+
+<style>
+  .box-show-product {
+    /* height: 540px; */
+    max-height: 100vh;
+  }
+
+  .list-cart {
+    /* height: 540px; */
+    max-height: 440px;
+    overflow-y: auto;
+  }
+
+  /* .mpcth-sidebar-left .mpcth-use-advance-colors #mpcth_main_container:before, .mpcth-sidebar-right .mpcth-use-advance-colors #mpcth_main_container:before { content: ''; position: absolute; top: 0; width: 200%; height: 100%; } */
+
+</style>
+<style>
+  body {
+    background-color: #E9ECEF;
+  }
+
+  input[type='number'] {
+    /* border: 0px; */
+  }
+
+  .disabled {
+    opacity: .65;
+    pointer-events: none;
+  }
+
+  #overlay {
+    z-index: 9999;
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: rgba(0, 0, 0, 0.6);
+  }
+
+  .qty .count {
+    color: #000;
+    display: inline-block;
+    vertical-align: top;
+    font-size: 25px;
+    font-weight: 700;
+    line-height: 30px;
+    padding: 0 2px;
+    min-width: 35px;
+    text-align: center;
+  }
+
+  .qty .plus {
+    cursor: pointer;
+    display: inline-block;
+    vertical-align: top;
+    color: white;
+    width: 30px;
+    height: 30px;
+    font: 30px/1 Arial, sans-serif;
+    text-align: center;
+    border-radius: 50%;
+  }
+
+  .qty .minus {
+    cursor: pointer;
+    display: inline-block;
+    vertical-align: top;
+    color: white;
+    width: 30px;
+    height: 30px;
+    font: 30px/1 Arial, sans-serif;
+    text-align: center;
+    border-radius: 50%;
+    background-clip: padding-box;
+  }
+
+  /* 
+  div {
+      text-align: center;
+  } */
+
+  .minus:hover {
+    background-color: #717fe0 !important;
+  }
+
+  .plus:hover {
+    background-color: #717fe0 !important;
+  }
+
+  /*Prevent text selection*/
+  span {
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+  }
+
+  input {
+    border: 0;
+    width: 2%;
+  }
+
+  input::-webkit-outer-spin-button,
+  input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+
+  input:disabled {
+    background-color: white;
+  }
+
+  .box-product{
+    position: relative;
+    overflow: hidden;
+    /* border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    max-height: 230px; */
+  }
+
+  .box-product img:hover{
+    transform: scale(1.2);
+    transition: all 0.4s;
+  }
+
+  .container-product{
+    cursor: pointer;
+    transition: all 0.4s ease;
+  }
+
+  .container-product:hover{
+    box-shadow: 1px 1px 5px grey;
+  }
+
+</style>
+
+<body class="hold-transition sidebar-mini">
+  <div id="app" class="wrapper">
+
+    <!-- Navbar -->
+    <nav class="main-header navbar navbar-expand navbar-white navbar-light">
+      <!-- Left navbar links -->
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a class="nav-link" data-widget="pushmenu" href="#"><i class="fas fa-bars"></i></a>
+        </li>
+      </ul>
+
+      <!-- Right navbar links -->
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item dropdown user-menu">
+          <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+            <img src="dist/img/user2-160x160.jpg" class="user-image img-circle elevation-2" alt="User Image">
+            <span class="d-none d-md-inline">Chayut Sae wong</span>
+          </a>
+          <ul class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
+            <!-- User image -->
+            <li class="user-header bg-primary">
+              <img src="dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
+
+              <p>
+                Chayut
+                <small>Member since Feb. 2020</small>
+              </p>
+            </li>
+            <!-- Menu Footer-->
+            <li class="user-footer">
+              <a href="#" class="btn btn-default btn-flat float-right btn-block">ออกจากระบบ</a>
+            </li>
+          </ul>
+        </li>
+      </ul>
+    </nav>
+    <!-- /.navbar -->
+
+    <!-- Main Sidebar Container -->
+    <aside class="main-sidebar sidebar-dark-primary elevation-4">
+      <!-- Brand Logo -->
+      <a href="#" class="brand-link">
+        <img src="dist/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3"
+          style="opacity: .8">
+        <span class="brand-text font-weight-light"><b>BP</b>POS</span>
+      </a>
+
+      <!-- Sidebar -->
+      <div class="sidebar">
+        <!-- Sidebar user panel (optional) -->
+        <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+          <div class="image">
+            <img src="dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
+          </div>
+          <div class="info">
+            <a href="#" class="d-block">Chayut Sae wong</a>
+          </div>
+        </div>
+
+        <!-- Sidebar Menu -->
+        <nav class="mt-2">
+          <ul class="nav nav-pills nav-sidebar flex-column nav-child-indent text-sm" data-widget="treeview" role="menu"
+            data-accordion="false">
+            <!-- Add icons to the links using the .nav-icon class
+               with font-awesome or any other icon font library -->
+            <li class="nav-item has-treeview menu-open">
+              <a href="#" class="nav-link active">
+                <i class="nav-icon fas fa-store"></i>
+                <p>
+                  หน้าร้าน
+                  <i class="right fas fa-angle-left"></i>
+                </p>
+              </a>
+              <ul class="nav nav-treeview">
+                <li class="nav-item">
+                  <a href="#" class="nav-link active">
+                    <i class="fas fa-shopping-basket nav-icon"></i>
+                    <p>หน้าขาย</p>
+                  </a>
+                </li>
+              </ul>
+            </li>
+          </ul>
+        </nav>
+        <!-- /.sidebar-menu -->
+      </div>
+      <!-- /.sidebar -->
+    </aside>
+
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+
+      <!-- Main content -->
+      <div class="content">
+        <div class="container-fluid">
+          <div class="row">
+
+
+
+            <div class="col-lg-8">
+
+              <div class="row my-2">
+                <div class="col-sm-6">
+                  <select name="" id="" class="form-control">
+                    <option value="">ทั้งหมด</option>
+                  </select>
+                </div><!-- /.col -->
+                <div class="col-sm-6">
+                  <input type="text" class="form-control" placeholder="ค้นหา ชื่อ">
+                </div><!-- /.col -->
+              </div><!-- /.row -->
+
+              <div class="card">
+
+                <div class="card-body p-2 overflow-auto box-show-product">
+
+                  <div class="product">
+
+                    <div class="row">
+
+                      <div v-for="product in products" v-on:click="showItemModal(product), showAddModal=true"
+                        class="col-3 col-lg-3 text-sm">
+                        <div class="card container-product">
+                          <div class="box-product">
+                          <img
+                            src="https://cdn.pixabay.com/photo/2018/11/10/00/38/fried-rice-3805769_960_720.jpg"
+                            alt="" class="card-img-top">
+                          </div>
+
+                          <div class="card-body p-1">
+                            <div class="text-truncate">
+                              <h5 class="card-title">{{ product.name }}</h5>
+                            </div>
+                            <p class="card-text">{{ product.price }}</p>
+                          </div>
+                        </div>
+                      </div>
+
+                    </div>
+
+                  </div>
+
+
+                </div>
+              </div>
+
+            </div>
+            <!-- /.col-md-8 -->
+
+            <div class="col-lg-4 my-2">
+
+              <div class="card">
+                <div class="card-body">
+                  <div class="row">
+                    <div class="col-lg-12">
+                      <div class="text-right h1 bg-dark py-3 px-2">
+                        <span class="text-success font-weight-bold show-total">{{ getNum(sum_toal) }}</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-12 mt-1">
+                      <button class="btn btn-success btn-block btn-lg font-weight-bold rounded-0">ชำระเงิน <small>(F12)</small></button>
+                    </div>
+                    <div class="col-6 mt-1">
+                      <button class="btn btn-warning btn-block font-weight-bold btn-change-tb rounded-0">ย้ายโต๊ะ <small>(F10)</small></button>
+                    </div>
+                    <div class="col-6 mt-1">
+                      <button v-on:click="removeAll()"
+                        class="btn btn-danger btn-block font-weight-bold btn-clear rounded-0">ล้างทั้งหมด <small>(F9)</small></button>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+
+              <div class="card  list-cart">
+
+                <div v-if="carts.length == 0">
+                  <div class="p-4 h2 text-center">
+                    รอการขาย
+                  </div>
+                </div>
+
+                <div v-for="cart in carts" class="card-body border-bottom item py-2">
+
+                  <div class="row">
+                    <div class="col">{{ cart.name }}<br><small class="text-muted">{{ cart.note }}</small></div>
+                    <div class="col-auto">{{ getNum(cart.price * cart.qty) }}</div>
+                  </div>
+                  <div class="row mt-1">
+                    <div class="col">
+                      <button v-on:click="removeItem(cart)" class="btn btn-danger btn-sm"><i
+                          class="fas fa-trash"></i></button>
+                    </div>
+                    <div class="col-auto">x {{ cart.qty }}</div>
+                  </div>
+
+                </div>
+
+
+              </div>
+
+
+
+
+              <!-- <div class="row">
+                <div class="col-12 text-center h5">
+                  ไม่มีรายการ
+                </div>
+              </div> -->
+
+            </div>
+            <!-- /.col-md-4 -->
+
+
+          </div>
+          <!-- /.row -->
+        </div><!-- /.container-fluid -->
+      </div>
+      <!-- /.content -->
+    </div>
+    <!-- /.content-wrapper -->
+
+    <!-- Control Sidebar -->
+    <aside class="control-sidebar control-sidebar-dark">
+      <!-- Control sidebar content goes here -->
+      <div class="p-3">
+        <h5>Title</h5>
+        <p>Sidebar content</p>
+      </div>
+    </aside>
+    <!-- /.control-sidebar -->
+
+    <!-- Main Footer -->
+    <footer class="main-footer">
+      <!-- To the right -->
+      <div class="float-right d-none d-sm-inline">
+        Anything you want
+      </div>
+      <!-- Default to the left -->
+      <strong>Copyright &copy; 2014-2019 <a href="https://adminlte.io">AdminLTE.io</a>.</strong> All rights reserved.
+    </footer>
+
+
+
+
+    <!-- Modal -->
+
+
+    <div id="overlay" v-if="showAddModal">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">{{modalName}}</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"
+              @click="showAddModal=false; clearMsg();">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <label for="">หมายเหตุ (ไม่จำเป็นต้องระบุ)</label>
+            <textarea class="form-control" v-model="note" placeholder="เช่น ไม่ใส่ผัก"></textarea>
+            <div class="qty text-center mt-3">
+              <span class="minus bg-dark" v-on:click="count-=1 && count!=0">-</span>
+              <input type="number" class="count disabled" name="quality" id="quality" v-bind:value="count">
+              <span class="plus bg-dark" v-on:click="count+=1">+</span>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-success btn-block btn-lg font-weight-bold"
+              v-on:click="addItem(modalItem); clearMsg(); showAddModal=false;">เพิ่มไปยังตะกร้า -
+              {{modalPrice}}</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+
+
+
+
+
+
+
+
+  </div>
+  <!-- ./wrapper -->
+
+  <!-- REQUIRED SCRIPTS -->
+
+  <!-- jQuery -->
+  <script src="plugins/jquery/jquery.min.js"></script>
+  <!-- Bootstrap 4 -->
+  <script src="plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <!-- AdminLTE App -->
+  <script src="dist/js/adminlte.min.js"></script>
+
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+  <script>
+    var app = new Vue({
+      el: "#app",
+      data: {
+        showAddModal: false,
+        modalID: "",
+        modalItem: [],
+        modalName: "",
+        modalPrice: 0,
+        note: "",
+        count: 1,
+        sum_toal: 0.00,
+        carts: [],
+            products: [{
+            id: 1,
+            name: "ข้าวอะไรก็ได้ขอให้ชื่อมันยาวไว้ก่อน",
+            price: 120,
+          },
+          {
+            id: 2,
+            name: "ข้าวผัด",
+            price: 50,
+          },
+          {
+            id: 3,
+            name: "ผัดกราะเพราราดข้าว",
+            price: 50,
+          },
+          {
+            id: 4,
+            name: "ผัดเครื่องแกงราดข้าว",
+            price: 50,
+          },
+          {
+            id: 5,
+            name: "ผัดผักรวมราดข้าว",
+            price: 50,
+          },
+          {
+            id: 6,
+            name: "ต้มยําซีฟู้ด",
+            price: 90,
+          },
+          {
+            id: 7,
+            name: "ต้มข่าไก่",
+            price: 80,
+          },
+          {
+            id: 8,
+            name: "น้ำเปล่า",
+            price: 15,
+          },
+          {
+            id: 9,
+            name: "ชาดำเย็น",
+            price: 20,
+          },
+          {
+            id: 10,
+            name: "น้ำอ้อย",
+            price: 20,
+          },
+        ],
+      },
+      methods: {
+        showItemModal: function (item) {
+
+          var itemInCart = this.carts.filter(obj => obj.id === item.id);
+          var isitemInCart = itemInCart.length > 0;
+
+          if (isitemInCart === true) {
+            this.count = itemInCart[0].qty;
+            this.note = itemInCart[0].note;
+          }
+
+          this.modalName = item.name;
+          this.modalPrice = item.price;
+          this.modalItem = item;
+          this.modalID = item.id;
+          
+
+        },
+        getNum(val) {
+          return val.toFixed(2);
+        },
+        addItem: function (item) {
+
+          var found = false;
+          var itemInCart = this.carts.filter(obj => obj.id === item.id);
+          var isitemInCart = itemInCart.length > 0;
+
+
+          if (isitemInCart === false) {
+            this.carts.push({
+              id: item.id,
+              name: item.name,
+              price: item.price,
+              qty: this.count,
+              note: this.note,
+              total: (item.price * this.count)
+            });
+          } else {
+            itemInCart[0].qty = this.count;
+            itemInCart[0].note = this.note;
+            itemInCart[0].total = (itemInCart[0].price * itemInCart[0].qty)
+          }
+
+
+          this.sum_toal = this.carts.reduce((a, b) => a + (b["total"] || 0), 0);
+
+        },
+        removeItem: function (key) {
+          this.carts.splice(this.carts.indexOf(key), 1);
+          this.sum_toal -= key.total;
+        },
+        removeAll: function () {
+          this.sum_toal = 0.00;
+          this.carts = [];
+        },
+        clearMsg: function () {
+          app.count = 1;
+          app.note = "";
+          app.modalItem = [];
+          app.modalName = "";
+          app.modalPrice = 0;
+          app.modalID = "";
+        },
+      }
+    });
+
+  </script>
+</body>
+
+</html>
